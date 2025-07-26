@@ -162,6 +162,43 @@ func (s *Scraper) DeleteTweet(tweetId string) error {
 	return nil
 }
 
+func (s *Scraper) CreateBookmark(tweetId string) (string, error) {
+	req, err := s.newRequest("POST", "https://twitter.com/i/api/graphql/aoDbu3RHznuiSkQ9aNM67Q/CreateBookmark")
+	if err != nil {
+		return "", err
+	}
+
+	req.Header.Set("content-type", "application/json")
+	variables := map[string]interface{}{
+		"tweet_id":     tweetId,
+	}
+
+	body := map[string]interface{}{
+		"variables": variables,
+		"queryId":   "aoDbu3RHznuiSkQ9aNM67Q",
+	}
+
+	b, _ := json.Marshal(body)
+	req.Body = io.NopCloser(bytes.NewReader(b))
+
+	var response struct {
+		Data struct {
+			TweetBookmarkPut string `json:"tweet_bookmark_put"`
+		} `json:"data"`
+	}
+
+	err = s.RequestAPI(req, &response)
+	if err != nil {
+		return "", err
+	}
+
+	if response.Data.TweetBookmarkPut != "" {
+		return response.Data.TweetBookmarkPut, nil
+	}
+
+	return "", errors.New("tweet wasn't bookmarked")
+}
+
 func (s *Scraper) CreateRetweet(tweetId string) (string, error) {
 	req, err := s.newRequest("POST", "https://twitter.com/i/api/graphql/ojPdsZsimiJrUGLR1sjUtA/CreateRetweet")
 	if err != nil {
