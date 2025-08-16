@@ -77,6 +77,7 @@ type (
 		SensitiveContent  bool
 		BookmarkCount      int
 		QuoteCount         int
+		UnavailableMedia   bool
 	}
 
 	// ProfileResult of scrapping.
@@ -99,6 +100,11 @@ type (
 		Videos    []Video
 		Photos    []Photo
 		GIFs      []GIF
+	}
+
+	ExtMediaAvailability struct {
+		Reason string `json:"reason"`
+		Status string `json:"status"`
 	}
 
 	ExtendedMedia struct {
@@ -135,6 +141,7 @@ type (
 				MediaURLHttps string `json:"media_url_https"`
 				Type          string `json:"type"`
 				URL           string `json:"url"`
+				ExtMediaAvailability *ExtMediaAvailability `json:"ext_media_availability"`
 			} `json:"media"`
 			URLs         []Url `json:"urls"`
 			UserMentions []struct {

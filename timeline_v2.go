@@ -93,6 +93,17 @@ func (result *result) parse() *Tweet {
 	if result.QuotedStatusResult.Result != nil {
 		tw.QuotedStatus = result.QuotedStatusResult.Result.parse()
 	}
+	
+	if result.Legacy.Entities.Media != nil {
+		for _, media := range result.Legacy.Entities.Media {
+			if media.ExtMediaAvailability != nil {
+				if media.ExtMediaAvailability.Status == "Unavailable" {
+					tw.UnavailableMedia = true
+				}
+			}
+		}
+	}
+
 	// Get bookmarks and quotes
 	tw.BookmarkCount = legacy.BookmarkCount
 	tw.QuoteCount = legacy.QuoteCount
