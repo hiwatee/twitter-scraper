@@ -93,6 +93,9 @@ func (result *result) parse() *Tweet {
 	if result.QuotedStatusResult.Result != nil {
 		tw.QuotedStatus = result.QuotedStatusResult.Result.parse()
 	}
+	// Get bookmarks and quotes
+	tw.BookmarkCount = legacy.BookmarkCount
+	tw.QuoteCount = legacy.QuoteCount
 
 	// Get videos from cards
 	for _, v := range result.Tweet.Card.Legacy.BindingValues {
