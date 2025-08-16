@@ -75,6 +75,8 @@ type (
 		Videos            []Video
 		Views             int
 		SensitiveContent  bool
+		BookmarkCount      int
+		QuoteCount         int
 	}
 
 	// ProfileResult of scrapping.
@@ -119,6 +121,8 @@ type (
 	}
 
 	legacyTweet struct {
+		BookmarkCount     int    `json:"bookmark_count"`
+		QuoteCount        int    `json:"quote_count"`
 		ConversationIDStr string `json:"conversation_id_str"`
 		CreatedAt         string `json:"created_at"`
 		FavoriteCount     int    `json:"favorite_count"`
