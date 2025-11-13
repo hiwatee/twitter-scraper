@@ -21,6 +21,9 @@ func (s *Scraper) RequestAPI(req *http.Request, target interface{}) error {
 		return err
 	}
 
+	req.Header.Set("authorization", "Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA")
+	req.Header.Set("user-agent", "Mozilla/5.0 (X11; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0")
+
 	resp, err := s.client.Do(req)
 	if err != nil {
 		return err
@@ -103,11 +106,11 @@ func (s *Scraper) handleResponse(resp *http.Response, target interface{}) error 
 
 // GetGuestToken from Twitter API
 func (s *Scraper) GetGuestToken() error {
-	req, err := http.NewRequest("POST", "https://api.twitter.com/1.1/guest/activate.json", nil)
+	req, err := http.NewRequest("POST", "https://api.x.com/1.1/guest/activate.json", nil)
 	if err != nil {
 		return err
 	}
-	req.Header.Set("Authorization", "Bearer "+s.bearerToken)
+	req.Header.Set("Authorization", "Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA")
 
 	resp, err := s.client.Do(req)
 	if err != nil {
